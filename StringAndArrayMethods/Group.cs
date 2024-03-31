@@ -2,34 +2,77 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace StringAndArrayMethods
 {
-    internal class Group
+    internal class Group :Student
     {
-        public string No { get; }
-        public List<Student> Students { get; }
-        public int StudentLimit { get; }
+        public string No;
+        private byte _studentLimit;
 
-        public Group(string no, int studentLimit)
+        Student[] Students = new Student[] { };
+
+        public byte StudentLimit
         {
-            No = no;
-            Students = new List<Student>();
-            StudentLimit = studentLimit;
+            get
+            {
+                return _studentLimit;
+            }
+            set
+            {
+                if (value > 0)
+                {
+                    _studentLimit = value;
+                }
+            }
+        }
+        public Group()
+        {
+
+        }
+
+        public Group(string fullname, string groupno, double avgpoint, string no, byte studentlimit) : base(fullname, groupno, avgpoint)
+        {
+            no = GroupNo;
+            studentlimit = _studentLimit;
         }
 
         public void AddStudent(Student student)
         {
-            if (Students.Count < StudentLimit)
+            if (StudentLimit > Students.Length)
             {
-                Students.Add(student);
-                Console.WriteLine($"{student.FullName} bu qrupa elave olundu.");
+                Array.Resize(ref Students, Students.Length + 1);
+                Students[Students.Length - 1] = student;
             }
-            else
+        }
+        public Student[] ShowAllStudentInfo()
+        {
+            for (int i = 0; i < Students.Length; i++)
             {
-                Console.WriteLine("Artig telebe daxil etmek olmur!");
+                Console.WriteLine($"Fullname:{Students[i].FullName}\n" + $"Groupno:{Students[i].GroupNo}\n" + $"AvgPoint:{Students[i].AvgPoint}");
+                Console.WriteLine("-----");
             }
+            return Students;
+        }
+
+
+
+        public Student[] SearchStudent(string value)
+        {
+            bool result;
+
+            for (int i = 0; i < Students.Length; i++)
+            {
+                if (result = Students[i].FullName.Contains(value))
+                {
+                    result = true;
+                    Console.WriteLine($"Fullname:{Students[i].FullName}\n" + $"Groupno:{Students[i].GroupNo}\n" + $"AvgPoint:{Students[i].AvgPoint}");
+                    Console.WriteLine("--------------");
+                }
+            }
+            return Students;
         }
     }
 }

@@ -8,8 +8,40 @@ namespace StringAndArrayMethods
 {
     internal class Student
     {
-        public string FullName { get; set; }
-        public string GroupNo { get; set; }
-        public double AvgPoint { get; set; }
+        public string FullName;
+        public string GroupNo;
+        private double _avgPoint;
+
+        public double AvgPoint
+        {
+            get
+            {
+                return _avgPoint;
+            }
+            set
+            {
+                if (value >= 0)
+                {
+                    _avgPoint = value;
+                }
+            }
+        }
+        public Student()
+        {
+
+        }
+
+        public Student(string fullname)
+        {
+            FullName = fullname;
+        }
+        public Student(string fullname, string groupno) : this(fullname)
+        {
+            GroupNo = groupno;
+        }
+        public Student(string fullname, string groupno, double avgpoint) : this(fullname, groupno)
+        {
+            _avgPoint = avgpoint;
+        }
     }
 }
